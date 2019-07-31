@@ -715,7 +715,14 @@
             // previewPanel
             // 
             this.previewPanel.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.previewPanel.BackgroundImage = global::AssetStudioGUI.Properties.Resources.preview;
+            try
+            {
+                this.previewPanel.BackgroundImage = global::AssetStudioGUI.Properties.Resources.preview;
+            }
+            catch
+            {
+
+            }
             this.previewPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.previewPanel.Controls.Add(this.assetInfoLabel);
             this.previewPanel.Controls.Add(this.FMODpanel);

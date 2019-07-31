@@ -18,56 +18,57 @@ namespace AssetStudio
             var m_AudioData = m_AudioClip.m_AudioData.Value;
             if (m_AudioData == null || m_AudioData.Length == 0)
                 return null;
-            var exinfo = new FMOD.CREATESOUNDEXINFO();
-            var result = FMOD.Factory.System_Create(out var system);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            result = system.init(1, FMOD.INITFLAGS.NORMAL, IntPtr.Zero);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            exinfo.cbsize = Marshal.SizeOf(exinfo);
-            exinfo.length = (uint)m_AudioClip.m_Size;
-            result = system.createSound(m_AudioData, FMOD.MODE.OPENMEMORY, ref exinfo, out var sound);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            result = sound.getSubSound(0, out var subsound);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            result = subsound.getFormat(out var type, out var format, out int channels, out int bits);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            result = subsound.getDefaults(out var frequency, out int priority);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            var sampleRate = (int)frequency;
-            result = subsound.getLength(out var length, FMOD.TIMEUNIT.PCMBYTES);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            result = subsound.@lock(0, length, out var ptr1, out var ptr2, out var len1, out var len2);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            byte[] buffer = new byte[len1 + 44];
-            //添加wav头
-            Encoding.UTF8.GetBytes("RIFF").CopyTo(buffer, 0);
-            BitConverter.GetBytes(len1 + 36).CopyTo(buffer, 4);
-            Encoding.UTF8.GetBytes("WAVEfmt ").CopyTo(buffer, 8);
-            BitConverter.GetBytes(16).CopyTo(buffer, 16);
-            BitConverter.GetBytes((short)1).CopyTo(buffer, 20);
-            BitConverter.GetBytes((short)channels).CopyTo(buffer, 22);
-            BitConverter.GetBytes(sampleRate).CopyTo(buffer, 24);
-            BitConverter.GetBytes(sampleRate * channels * bits / 8).CopyTo(buffer, 28);
-            BitConverter.GetBytes((short)(channels * bits / 8)).CopyTo(buffer, 32);
-            BitConverter.GetBytes((short)bits).CopyTo(buffer, 34);
-            Encoding.UTF8.GetBytes("data").CopyTo(buffer, 36);
-            BitConverter.GetBytes(len1).CopyTo(buffer, 40);
-            Marshal.Copy(ptr1, buffer, 44, (int)len1);
-            result = subsound.unlock(ptr1, ptr2, len1, len2);
-            if (result != FMOD.RESULT.OK)
-                return null;
-            subsound.release();
-            sound.release();
-            system.release();
-            return buffer;
+            //var exinfo = new FMOD.CREATESOUNDEXINFO();
+            //var result = FMOD.Factory.System_Create(out var system);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //result = system.init(1, FMOD.INITFLAGS.NORMAL, IntPtr.Zero);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //exinfo.cbsize = Marshal.SizeOf(exinfo);
+            //exinfo.length = (uint)m_AudioClip.m_Size;
+            //result = system.createSound(m_AudioData, FMOD.MODE.OPENMEMORY, ref exinfo, out var sound);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //result = sound.getSubSound(0, out var subsound);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //result = subsound.getFormat(out var type, out var format, out int channels, out int bits);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //result = subsound.getDefaults(out var frequency, out int priority);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //var sampleRate = (int)frequency;
+            //result = subsound.getLength(out var length, FMOD.TIMEUNIT.PCMBYTES);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //result = subsound.@lock(0, length, out var ptr1, out var ptr2, out var len1, out var len2);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //byte[] buffer = new byte[len1 + 44];
+            ////添加wav头
+            //Encoding.UTF8.GetBytes("RIFF").CopyTo(buffer, 0);
+            //BitConverter.GetBytes(len1 + 36).CopyTo(buffer, 4);
+            //Encoding.UTF8.GetBytes("WAVEfmt ").CopyTo(buffer, 8);
+            //BitConverter.GetBytes(16).CopyTo(buffer, 16);
+            //BitConverter.GetBytes((short)1).CopyTo(buffer, 20);
+            //BitConverter.GetBytes((short)channels).CopyTo(buffer, 22);
+            //BitConverter.GetBytes(sampleRate).CopyTo(buffer, 24);
+            //BitConverter.GetBytes(sampleRate * channels * bits / 8).CopyTo(buffer, 28);
+            //BitConverter.GetBytes((short)(channels * bits / 8)).CopyTo(buffer, 32);
+            //BitConverter.GetBytes((short)bits).CopyTo(buffer, 34);
+            //Encoding.UTF8.GetBytes("data").CopyTo(buffer, 36);
+            //BitConverter.GetBytes(len1).CopyTo(buffer, 40);
+            //Marshal.Copy(ptr1, buffer, 44, (int)len1);
+            //result = subsound.unlock(ptr1, ptr2, len1, len2);
+            //if (result != FMOD.RESULT.OK)
+            //    return null;
+            //subsound.release();
+            //sound.release();
+            //system.release();
+            //return buffer;
+            return null;
         }
 
         public string GetExtensionName()

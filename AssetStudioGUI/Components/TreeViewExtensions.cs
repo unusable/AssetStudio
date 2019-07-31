@@ -42,7 +42,14 @@ namespace AssetStudioGUI
                 stateMask = TVIS_STATEIMAGEMASK,
                 state = 0
             };
-            SendMessage(node.TreeView.Handle, TVM_SETITEM, IntPtr.Zero, ref tvi);
+            try
+            {
+                SendMessage(node.TreeView.Handle, TVM_SETITEM, IntPtr.Zero, ref tvi);
+            }
+            catch(System.Exception e)
+            {
+
+            }
         }
     }
 }
