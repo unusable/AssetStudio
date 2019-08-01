@@ -90,13 +90,15 @@ namespace AssetStudioGUI
 
         private void loadFolder_Click(object sender, EventArgs e)
         {
-            var openFolderDialog = new OpenFolderDialog();
+            //var openFolderDialog = new OpenFolderDialog();
+            var openFolderDialog = new OpenFileDialog();
             if (openFolderDialog.ShowDialog(this) == DialogResult.OK)
             {
                 ResetForm();
                 ThreadPool.QueueUserWorkItem(state =>
                 {
-                    assetsManager.LoadFolder(openFolderDialog.Folder);
+                    var path = Path.GetDirectoryName(openFolderDialog.FileName);
+                    assetsManager.LoadFolder(path);
                     BuildAssetStructures();
                 });
             }
@@ -298,10 +300,10 @@ namespace AssetStudioGUI
                     Progress.Reset();
                     foreach (TypeTreeItem item in classesListView.Items)
                     {
-                        var versionPath = savePath + "\\" + item.Group.Header;
+                        var versionPath = savePath + Path.DirectorySeparatorChar + item.Group.Header;
                         Directory.CreateDirectory(versionPath);
 
-                        var saveFile = $"{versionPath}\\{item.SubItems[1].Text} {item.Text}.txt";
+                        var saveFile = $"{versionPath}{Path.DirectorySeparatorChar}{item.SubItems[1].Text}_{item.Text}.txt";
                         File.WriteAllText(saveFile, item.ToString());
 
                         Progress.Report(++i, count);
@@ -1723,7 +1725,7 @@ namespace AssetStudioGUI
                 var saveFolderDialog1 = new OpenFolderDialog();
                 if (saveFolderDialog1.ShowDialog(this) == DialogResult.OK)
                 {
-                    var exportPath = saveFolderDialog1.Folder + "\\Animator\\";
+                    var exportPath = saveFolderDialog1.Folder + Path.DirectorySeparatorChar + "Animator" + Path.DirectorySeparatorChar;
                     ExportAnimatorWithAnimationClip(animator, animationList, exportPath, openAfterExport.Checked);
                 }
             }
@@ -1746,7 +1748,7 @@ namespace AssetStudioGUI
                 var saveFolderDialog1 = new OpenFolderDialog();
                 if (saveFolderDialog1.ShowDialog(this) == DialogResult.OK)
                 {
-                    var exportPath = saveFolderDialog1.Folder + "\\GameObject\\";
+                    var exportPath = saveFolderDialog1.Folder + Path.DirectorySeparatorChar + "GameObject" + Path.DirectorySeparatorChar;
                     List<AssetItem> animationList = null;
                     if (animation)
                     {
@@ -1864,7 +1866,7 @@ namespace AssetStudioGUI
                 var saveFolderDialog1 = new OpenFolderDialog();
                 if (saveFolderDialog1.ShowDialog(this) == DialogResult.OK)
                 {
-                    var savePath = saveFolderDialog1.Folder + "\\";
+                    var savePath = saveFolderDialog1.Folder + Path.DirectorySeparatorChar;
                     ExportSplitObjects(savePath, sceneTreeView.Nodes, openAfterExport.Checked);
                 }
             }
