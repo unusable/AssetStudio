@@ -19,7 +19,7 @@ namespace AssetStudio
             foreach (var splitFile in splitFiles)
             {
                 var destFile = Path.GetFileNameWithoutExtension(splitFile);
-                var destPath = Path.GetDirectoryName(splitFile) + "\\";
+                var destPath = Path.GetDirectoryName(splitFile) + Path.DirectorySeparatorChar;
                 var destFull = destPath + destFile;
                 if (!File.Exists(destFull))
                 {
@@ -42,7 +42,7 @@ namespace AssetStudio
         public static string[] ProcessingSplitFiles(List<string> selectFile)
         {
             var splitFiles = selectFile.Where(x => x.Contains(".split"))
-                .Select(x => Path.GetDirectoryName(x) + "\\" + Path.GetFileNameWithoutExtension(x))
+                .Select(x => Path.GetDirectoryName(x) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(x))
                 .Distinct()
                 .ToList();
             selectFile.RemoveAll(x => x.Contains(".split"));

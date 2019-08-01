@@ -57,7 +57,7 @@ namespace AssetStudioGUI
             reader.Dispose();
             if (bundleFile.fileList.Count > 0)
             {
-                var extractPath = bundleFileName + "_unpacked\\";
+                var extractPath = bundleFileName + "_unpacked" + Path.DirectorySeparatorChar;
                 return ExtractStreamFile(extractPath, bundleFile.fileList);
             }
             return 0;
@@ -70,7 +70,7 @@ namespace AssetStudioGUI
             reader.Dispose();
             if (webFile.fileList.Count > 0)
             {
-                var extractPath = webFileName + "_unpacked\\";
+                var extractPath = webFileName + "_unpacked" + Path.DirectorySeparatorChar;
                 return ExtractStreamFile(extractPath, webFile.fileList);
             }
             return 0;
@@ -216,7 +216,7 @@ namespace AssetStudioGUI
                                 item.Extension = extension;
                             }
 
-                            item.Text = Path.GetDirectoryName(originalPath) + "\\" + Path.GetFileNameWithoutExtension(originalPath);
+                            item.Text = Path.GetDirectoryName(originalPath) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(originalPath);
                             if (!assetsNameHash.Add((item.TypeString + item.Text).ToUpper()))
                             {
                                 item.Text += item.UniqueID;
@@ -363,14 +363,14 @@ namespace AssetStudioGUI
                 Progress.Reset();
                 foreach (var asset in toExportAssets)
                 {
-                    var exportpath = savePath + "\\";
+                    var exportpath = savePath + Path.DirectorySeparatorChar;
                     if (assetGroupSelectedIndex == 1)
                     {
-                        exportpath += Path.GetFileNameWithoutExtension(asset.SourceFile.fullName) + "_export\\";
+                        exportpath += Path.GetFileNameWithoutExtension(asset.SourceFile.fullName) + "_export" + Path.DirectorySeparatorChar;
                     }
                     else if (assetGroupSelectedIndex == 0)
                     {
-                        exportpath = savePath + "\\" + asset.TypeString + "\\";
+                        exportpath = savePath + Path.DirectorySeparatorChar + asset.TypeString + Path.DirectorySeparatorChar;
                     }
                     StatusStripUpdate($"Exporting {asset.TypeString}: {asset.Text}");
                     try
@@ -518,13 +518,13 @@ namespace AssetStudioGUI
                         //处理非法文件名
                         var filename = FixFileName(j.Text);
                         //每个文件存放在单独的文件夹
-                        var targetPath = $"{savePath}{filename}\\";
+                        var targetPath = $"{savePath}{filename}{Path.DirectorySeparatorChar}";
                         //重名文件处理
                         for (int i = 1; ; i++)
                         {
                             if (Directory.Exists(targetPath))
                             {
-                                targetPath = $"{savePath}{filename} ({i})\\";
+                                targetPath = $"{savePath}{filename} ({i}){Path.DirectorySeparatorChar}";
                             }
                             else
                             {

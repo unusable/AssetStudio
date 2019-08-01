@@ -299,7 +299,7 @@ namespace AssetStudioGUI
         {
             var m_Animator = (Animator)item.Asset;
             var convert = animationList != null ? new ModelConverter(m_Animator, animationList.Select(x => (AnimationClip)x.Asset).ToArray()) : new ModelConverter(m_Animator);
-            exportPath = $"{exportPath}{item.Text}\\{item.Text}.fbx";
+            exportPath = $"{exportPath}{item.Text}{Path.DirectorySeparatorChar}{item.Text}.fbx";
             ExportFbx(convert, exportPath);
             return true;
         }

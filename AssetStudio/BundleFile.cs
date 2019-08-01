@@ -226,7 +226,7 @@ namespace AssetStudio
                         {
                             /*var memoryMappedFile = MemoryMappedFile.CreateNew(file.fileName, entryinfo_size);
                             file.stream = memoryMappedFile.CreateViewStream();*/
-                            var extractPath = path + "_unpacked\\";
+                            var extractPath = path + "_unpacked" + Path.DirectorySeparatorChar;
                             Directory.CreateDirectory(extractPath);
                             file.stream = File.Create(extractPath + file.fileName);
                         }

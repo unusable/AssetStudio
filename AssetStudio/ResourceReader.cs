@@ -41,7 +41,7 @@ namespace AssetStudio
                 }
 
                 var currentDirectory = Path.GetDirectoryName(assetsFile.fullName);
-                var resourceFilePath = currentDirectory + "\\" + resourceFileName;
+                var resourceFilePath = currentDirectory + Path.DirectorySeparatorChar + resourceFileName;
                 if (!File.Exists(resourceFilePath))
                 {
                     var findFiles = Directory.GetFiles(currentDirectory, resourceFileName, SearchOption.AllDirectories);
