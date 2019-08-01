@@ -8,7 +8,8 @@ namespace AssetStudio
     {
         AssetsFile,
         BundleFile,
-        WebFile
+        WebFile,
+        Unknown = 0x1000
     }
 
     public static class ImportHelper
@@ -90,11 +91,16 @@ namespace AssetStudio
                             return FileType.WebFile;
                         }
                         reader.Position = 0x20;
-                        magic = reader.ReadBytes(6);
+                        var magic2 = reader.ReadBytes(6);
                         reader.Position = 0;
-                        if (WebFile.brotliMagic.SequenceEqual(magic))
+                        if (WebFile.brotliMagic.SequenceEqual(magic2))
                         {
                             return FileType.WebFile;
+                        }
+                        if (magic[0] != 0)
+                        {
+                            System.Console.WriteLine($"FileType Unknown: [{magic[0].ToString("X2")} {magic[1].ToString("X2")}] <{signature}>");
+                            return FileType.Unknown;
                         }
                         return FileType.AssetsFile;
                     }
