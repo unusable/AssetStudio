@@ -235,6 +235,7 @@ namespace AssetStudio
             Progress.Reset();
             foreach (var assetsFile in assetsFileList)
             {
+                Logger.Info("Read file: " + assetsFile.fileName);
                 assetsFile.Objects = new Dictionary<long, Object>(assetsFile.m_Objects.Count);
                 foreach (var objectInfo in assetsFile.m_Objects)
                 {
@@ -323,6 +324,7 @@ namespace AssetStudio
                             assetsFile.Objects.Add(objectInfo.m_PathID, new VideoClip(objectReader));
                             break;
                         default:
+                            Logger.Info("Read Objet: " + objectReader.type.ToString());
                             assetsFile.Objects.Add(objectInfo.m_PathID, new Object(objectReader));
                             break;
                     }

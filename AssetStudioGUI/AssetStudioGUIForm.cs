@@ -1369,6 +1369,7 @@ namespace AssetStudioGUI
 
         private void StatusStripUpdate(string statusText)
         {
+            System.Console.WriteLine(statusText);
             if (InvokeRequired)
             {
                 BeginInvoke(new Action(() => { toolStripStatusLabel1.Text = statusText; }));
