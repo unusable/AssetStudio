@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetStudio", "AssetStudio\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetStudioFBX_2", "AssetStudioFBX_2\AssetStudioFBX_2.csproj", "{94C1DEE0-459E-4E87-97C7-CD851613711B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetStudioConsole", "AssetStudioConsole\AssetStudioConsole.csproj", "{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{94C1DEE0-459E-4E87-97C7-CD851613711B}.Release|x64.Build.0 = Release|Any CPU
 		{94C1DEE0-459E-4E87-97C7-CD851613711B}.Release|x86.ActiveCfg = Release|Any CPU
 		{94C1DEE0-459E-4E87-97C7-CD851613711B}.Release|x86.Build.0 = Release|Any CPU
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Debug|x64.ActiveCfg = Debug|x64
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Debug|x64.Build.0 = Debug|x64
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Debug|x86.ActiveCfg = Debug|x64
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Debug|x86.Build.0 = Debug|x64
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Release|x64.ActiveCfg = Release|x64
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Release|x64.Build.0 = Release|x64
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Release|x86.ActiveCfg = Release|x64
+		{FC6D8087-CD0D-4BBD-8AEC-6214CFF9AC20}.Release|x86.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
