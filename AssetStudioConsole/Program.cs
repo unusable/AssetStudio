@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using AssetStudio;
 
 namespace AssetStudioConsole
@@ -18,13 +19,16 @@ namespace AssetStudioConsole
 
         static void Main(string[] args)
         {
+            string basePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../.."));
+            Console.WriteLine(basePath);
+            //string inputPath = Path.Combine(basePath, "Sample/IdleCourier/assets/bin/Data");
+            //string outputPath = Path.Combine(basePath, "Sample/IdleCourier_output");
+            string inputPath = Path.Combine(basePath, "Sample/Farmville3/assets/bin/Data");
+            string outputPath = Path.Combine(basePath, "Sample/Farmville3_output");
             MakeSettings();
             Logger.Default = new ConsoleLogger();
             AssetExporter exporter = new AssetExporter();
-            exporter.Export("/Users/centurygame/work/github/AssetStudio/Sample/IdleCourier/assets/bin/Data", "/Users/centurygame/work/github/AssetStudio/Sample/IdleCourier_output");
-            //manager.assetsFileList.ForEach(v => {
-            //    Console.WriteLine(v.fileName);
-            //});
+            exporter.Export(inputPath, outputPath);
             Console.WriteLine("Completed!");
             //Console.ReadKey();
         }

@@ -26,7 +26,15 @@ namespace AssetStudio
         public void LoadFolder(string path)
         {
             MergeSplitAssets(path, true);
-            var files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).ToList();
+            var files = Directory.GetFiles(path).ToList();
+            //int index = files.FindIndex(v => v.EndsWith(".resource"));
+            //if (index >= 0)
+            //{
+            //    LoadFile(files[index]);
+            //    ReadAssets();
+            //    ProcessAssets();
+            //}
+            //return;
             var toReadFile = ProcessingSplitFiles(files);
             Load(toReadFile);
         }

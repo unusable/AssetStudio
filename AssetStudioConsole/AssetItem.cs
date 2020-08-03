@@ -23,5 +23,10 @@ namespace AssetStudioConsole
             Type = asset.type;
             TypeString = Type.ToString();
         }
+
+        public void Print()
+        {
+            Logger.Info($"{this.SourceFile.fileName} -- {this.TypeString} - {this.Text}");
+        }
     }
 }

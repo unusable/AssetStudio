@@ -1,5 +1,4 @@
-﻿//using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,7 +19,6 @@ namespace AssetStudioConsole
     {
 
         private AssetsManager assetsManager = new AssetsManager();
-        private List<AssetItem> exportableAssets = new List<AssetItem>();
 
         public void Export(string inputFolder, string outputFolder)
         {
@@ -28,12 +26,13 @@ namespace AssetStudioConsole
             {
                 Directory.CreateDirectory(outputFolder);
             }
+
+            Logger.Info("----------");
             this.assetsManager.LoadFolder(inputFolder);
 
-            var productName = string.Empty;
-            var tempDic = new Dictionary<Object, AssetItem>();
-            BuildAssetList(tempDic, true, true, out productName);
-            ExportAssets(outputFolder, this.exportableAssets, 0, true, ExportType.Convert);
+            List<AssetItem> exportableAssets = new List<AssetItem>();
+            BuildAssetList(exportableAssets, true, true);
+            ExportAssets(outputFolder, exportableAssets, 0, true, ExportType.Convert);
 
         }
 
@@ -41,12 +40,10 @@ namespace AssetStudioConsole
         {
         }
 
-        public void BuildAssetList(Dictionary<Object, AssetItem> tempDic, bool displayAll, bool displayOriginalName, out string productName)
+        public void BuildAssetList(List<AssetItem> exportableAssets, bool displayAll, bool displayOriginalName)
         {
             //StatusStripUpdate("Building asset list...");
-            exportableAssets.Clear();
 
-            productName = string.Empty;
             var assetsNameHash = new HashSet<string>();
             var progressCount = assetsManager.assetsFileList.Sum(x => x.Objects.Count);
             int j = 0;
@@ -58,7 +55,7 @@ namespace AssetStudioConsole
                 foreach (var asset in assetsFile.Objects.Values)
                 {
                     var assetItem = new AssetItem(asset);
-                    tempDic.Add(asset, assetItem);
+                    //tempDic.Add(asset, assetItem);
                     assetItem.UniqueID = " #" + j;
                     var exportable = false;
                     switch (asset)
@@ -116,7 +113,7 @@ namespace AssetStudioConsole
                             exportable = true;
                             break;
                         case PlayerSettings m_PlayerSettings:
-                            productName = m_PlayerSettings.productName;
+                            //productName = m_PlayerSettings.productName;
                             break;
                         case AssetBundle m_AssetBundle:
                             ab = m_AssetBundle;
@@ -146,6 +143,7 @@ namespace AssetStudioConsole
                     {
                         tempExportableAssets.Add(assetItem);
                     }
+                    assetItem.Print();
 
                     Progress.Report(++j, progressCount);
                 }
@@ -171,18 +169,13 @@ namespace AssetStudioConsole
                     }
                 }
                 exportableAssets.AddRange(tempExportableAssets);
-                tempExportableAssets.Clear();
             }
 
-            //visibleAssets = exportableAssets;
             assetsNameHash.Clear();
         }
 
         public static void ExportAssets(string savePath, List<AssetItem> toExportAssets, int assetGroupSelectedIndex, bool openAfterExport, ExportType exportType)
         {
-            //ThreadPool.QueueUserWorkItem(state =>
-            //{
-                //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
                 int toExportCount = toExportAssets.Count;
                 int exportedCount = 0;
@@ -199,7 +192,7 @@ namespace AssetStudioConsole
                     {
                         exportpath = savePath + Path.DirectorySeparatorChar + asset.TypeString + Path.DirectorySeparatorChar;
                     }
-                    //StatusStripUpdate($"Exporting {asset.TypeString}: {asset.Text}");
+                    Logger.Info($"Exporting {asset.TypeString}: {asset.Text}");
                     try
                     {
                         switch (exportType)
@@ -299,7 +292,7 @@ namespace AssetStudioConsole
                     }
                     catch (System.Exception ex)
                     {
-                        //MessageBox.Show($"Export {asset.Type}:{asset.Text} error\r\n{ex.Message}\r\n{ex.StackTrace}");
+                        Logger.Error($"Export {asset.Type}:{asset.Text} error\r\n{ex.Message}\r\n{ex.StackTrace}");
                     }
 
                     Progress.Report(++i, toExportCount);
@@ -318,7 +311,6 @@ namespace AssetStudioConsole
                 {
                     Process.Start(savePath);
                 }
-            //});
         }
 
         public static string FixFileName(string str)
