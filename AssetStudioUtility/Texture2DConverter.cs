@@ -930,7 +930,7 @@ namespace AssetStudio
             var imageBuff = new byte[m_Width * m_Height * 4];
             var gch = GCHandle.Alloc(imageBuff, GCHandleType.Pinned);
             var imagePtr = gch.AddrOfPinnedObject();
-            if (!NativeMethods.DecompressPVR(pvrData, imagePtr))
+            if (!NativeMethods.Valid || !NativeMethods.DecompressPVR(pvrData, imagePtr))
             {
                 gch.Free();
                 return null;
@@ -946,7 +946,7 @@ namespace AssetStudio
             var gch = GCHandle.Alloc(imageBuff, GCHandleType.Pinned);
             var imagePtr = gch.AddrOfPinnedObject();
             var fixAlpha = glBaseInternalFormat == KTXHeader.GL_RED || glBaseInternalFormat == KTXHeader.GL_RG;
-            if (!NativeMethods.Ponvert(image_data, image_data_size, m_Width, m_Height, (int)q_format, fixAlpha, imagePtr))
+            if (!NativeMethods.Valid || !NativeMethods.Ponvert(image_data, image_data_size, m_Width, m_Height, (int)q_format, fixAlpha, imagePtr))
             {
                 gch.Free();
                 return null;
@@ -961,6 +961,11 @@ namespace AssetStudio
             IntPtr uncompressedData;
             int uncompressedSize;
             bool result;
+            if (!NativeMethods.Valid)
+            {
+                return;
+            }
+
             if (version[0] > 2017 || (version[0] == 2017 && version[1] >= 3) //2017.3 and up
                 || m_TextureFormat == TextureFormat.ETC_RGB4Crunched
                 || m_TextureFormat == TextureFormat.ETC2_RGBA8Crunched)
@@ -984,6 +989,11 @@ namespace AssetStudio
 
         private Bitmap TexgenPackDecode()
         {
+            if (!NativeMethods.Valid)
+            {
+                return null;
+            }
+
             var imageBuff = new byte[m_Width * m_Height * 4];
             var gch = GCHandle.Alloc(imageBuff, GCHandleType.Pinned);
             var imagePtr = gch.AddrOfPinnedObject();
@@ -998,7 +1008,7 @@ namespace AssetStudio
             var imageBuff = new byte[m_Width * m_Height * 4];
             var gch = GCHandle.Alloc(imageBuff, GCHandleType.Pinned);
             var imagePtr = gch.AddrOfPinnedObject();
-            if (!NativeMethods.DecodeASTC(image_data, m_Width, m_Height, astcBlockWidth, astcBlockHeight, imagePtr))
+            if (!NativeMethods.Valid || !NativeMethods.DecodeASTC(image_data, m_Width, m_Height, astcBlockWidth, astcBlockHeight, imagePtr))
             {
                 gch.Free();
                 return null;
@@ -1011,6 +1021,7 @@ namespace AssetStudio
 
     internal static class NativeMethods
     {
+        public static bool Valid = false;
         [DllImport("PVRTexLibWrapper.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool DecompressPVR(byte[] data, IntPtr image);
 
