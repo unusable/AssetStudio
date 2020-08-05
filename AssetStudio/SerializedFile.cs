@@ -167,6 +167,7 @@ namespace AssetStudio
                 m_External.pathName = reader.ReadStringToNull();
                 m_External.fileName = Path.GetFileName(m_External.pathName);
                 m_Externals.Add(m_External);
+                Logger.Info(m_External.Dump());
             }
 
             if (header.m_Version >= 5)

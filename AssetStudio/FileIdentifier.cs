@@ -13,5 +13,11 @@ namespace AssetStudio
 
         //custom
         public string fileName;
+
+        public string Dump()
+        {
+            return string.Format("{0} {1} {2} {3}", guid.ToString(), type, fileName, pathName);
+        }
+
     }
 }

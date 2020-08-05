@@ -23,12 +23,15 @@ namespace AssetStudioConsole
             Console.WriteLine(basePath);
             //string inputPath = Path.Combine(basePath, "Sample/IdleCourier/assets/bin/Data");
             //string outputPath = Path.Combine(basePath, "Sample/IdleCourier_output");
-            string inputPath = Path.Combine(basePath, "Sample/Farmville3/assets/bin/Data");
-            string outputPath = Path.Combine(basePath, "Sample/Farmville3_output");
+            //string inputPath = Path.Combine(basePath, "Sample/Farmville3/assets/bin/Data");
+            //string outputPath = Path.Combine(basePath, "Sample/Farmville3_output");
+            string[] inputFiles = new string[] { Path.Combine(basePath, "Sample/tmp/model_assets") };
+            string outputPath = Path.Combine(basePath, "Sample/tmp_output");
             MakeSettings();
             Logger.Default = new ConsoleLogger();
             AssetExporter exporter = new AssetExporter();
-            exporter.Export(inputPath, outputPath);
+            //exporter.Export(inputPath, outputPath);
+            exporter.ExportFiles(inputFiles, outputPath);
             Console.WriteLine("Completed!");
             //Console.ReadKey();
         }
